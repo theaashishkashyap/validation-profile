@@ -8,7 +8,20 @@ from database import get_db
 from models import User
 from pydantic import BaseModel, field_validator
 
-app = FastAPI(title="User Validation API")
+from contextlib import asynccontextmanager
+from database import engine, Base
+from seed import seed_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Automatically check tables and seed demo data on server startup
+    try:
+        seed_db()
+    except Exception as e:
+        print(f"Auto-seeding database failed: {e}")
+    yield
+
+app = FastAPI(title="User Validation API", lifespan=lifespan)
 
 # Enable CORS for local and remote frontend access
 app.add_middleware(
