@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoader = submitBtn.querySelector('.btn-loader');
 
-    // API Endpoint Configuration
-    const API_URL = 'http://127.0.0.1:8000/api/validate-user';
+    // API Endpoint Configuration - relative for web server hosting/deployment, fallback to local URL if opened as static file
+    const API_URL = window.location.protocol.startsWith('http')
+        ? '/api/validate-user'
+        : 'http://127.0.0.1:8000/api/validate-user';
 
     // Regex for basic syntactical email verification
     const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

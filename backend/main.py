@@ -93,3 +93,12 @@ def validate_user(request_data: UserValidateRequest, db: Session = Depends(get_d
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"valid": False, "message": "Internal server error"}
         )
+
+# Serve the static frontend files directly from the root path
+import os
+from fastapi.staticfiles import StaticFiles
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", "frontend"))
+
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
