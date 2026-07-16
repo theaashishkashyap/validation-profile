@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoader = submitBtn.querySelector('.btn-loader');
 
-    // API Endpoint Configuration - relative for web server hosting/deployment, fallback to local URL if opened as static file
-    const API_URL = window.location.protocol.startsWith('http')
+    // API Endpoint Configuration - relative when hosted on Render, fallback to live Render URL when running frontend locally
+    const API_URL = window.location.hostname === 'validation-profile.onrender.com'
         ? '/api/validate-user'
-        : 'http://127.0.0.1:8000/api/validate-user';
+        : 'https://validation-profile.onrender.com/api/validate-user';
 
     // Regex for basic syntactical email verification
     const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
