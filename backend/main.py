@@ -10,11 +10,11 @@ from pydantic import BaseModel, field_validator
 
 app = FastAPI(title="User Validation API")
 
-# Enable CORS for local testing from frontend
+# Enable CORS for local and remote frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins for simple frontend file access
-    allow_credentials=True,
+    allow_origins=["*"],  # Allows all origins (e.g. Vercel, localhost)
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
