@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local database and env configurations
+.env
+*.db
+backend/*.db
+
+# IDE configurations
+.vscode/
+.idea/

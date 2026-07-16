@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Result</title>
+    <!-- Modern Typography: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Decorative Glowing Blobs -->
+    <div class="blob blob-purple"></div>
+    <div class="blob blob-blue"></div>
+
+    <main class="container">
+        <section id="result-card" class="card glassmorphism state-loading">
+            <!-- Dynamic Result Content will be injected here -->
+            <div id="loading-state" class="result-state-wrapper">
+                <svg class="spinner large-spinner" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                </svg>
+                <p>Processing results...</p>
+            </div>
+
+            <div id="success-state" class="result-state-wrapper hidden">
+                <div class="success-animation">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <h1 class="success-title">Verification Successful</h1>
+                <p class="success-subtitle">Welcome back, <span id="success-username" class="highlight">User</span>!</p>
+                <p class="status-description">Your credentials have been successfully matched with our database records.</p>
+                <a href="index.html" class="action-btn success-btn">Go Back</a>
+            </div>
+
+            <div id="failure-state" class="result-state-wrapper hidden">
+                <div class="failure-animation">
+                    <svg class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="crossmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="crossmark__cross_1" fill="none" d="M16 16 36 36"/>
+                        <path class="crossmark__cross_2" fill="none" d="M36 16 16 36"/>
+                    </svg>
+                </div>
+                <h1 class="failure-title">Verification Failed</h1>
+                <p id="failure-message" class="status-description">The credentials you entered do not match our database records.</p>
+                <p class="status-subtext">Please review the details and try again.</p>
+                <a href="index.html" class="action-btn failure-btn">Try Again</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Read query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const isValid = urlParams.get('valid') === 'true';
+            const name = urlParams.get('name') || 'User';
+            const message = urlParams.get('message');
+
+            const loadingCard = document.getElementById('loading-state');
+            const successCard = document.getElementById('success-state');
+            const failureCard = document.getElementById('failure-state');
+            const resultCard = document.getElementById('result-card');
+
+            // Hide loader
+            loadingCard.classList.add('hidden');
+            resultCard.classList.remove('state-loading');
+
+            if (isValid) {
+                // Configure success state
+                document.getElementById('success-username').textContent = name;
+                successCard.classList.remove('hidden');
+                resultCard.classList.add('border-success');
+            } else {
+                // Configure failure state
+                if (message) {
+                    document.getElementById('failure-message').textContent = message;
+                }
+                failureCard.classList.remove('hidden');
+                resultCard.classList.add('border-failure');
+            }
+        });
+    </script>
+</body>
+</html>
